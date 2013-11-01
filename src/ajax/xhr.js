@@ -96,7 +96,9 @@ if ( xhrSupported ) {
 					// Need an extra try/catch for cross domain requests in Firefox 3
 					try {
 						for ( i in headers ) {
-							xhr.setRequestHeader( i, headers[ i ] );
+							// IE7, IE8 ActiveXObject fails when setting header value to
+							// null and all subsequent headers will fail to set properly.
+							xhr.setRequestHeader( i, headers[ i ] === null ? 'null' || headers[ i ] );
 						}
 					} catch( err ) {}
 
